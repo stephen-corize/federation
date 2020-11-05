@@ -1,0 +1,44 @@
+type Customer {
+  id:ID! @fake(type:number)
+  firstName: String @fake(type: firstName, locale: en_CA)
+  lastName: String @fake(type: lastName, locale: en_CA)
+  companyAddress: Address
+  contacts: [Contact]! @listLength(min:1, max: 3)
+}
+
+type Query {
+  customers: [Customer]! @listLength(min:1, max: 10)
+  customer(id: ID!): Customer
+}
+
+type Mutation {
+  createCustomerContact(input: CustomerContactInput): Boolean
+}
+
+input CustomerContactInput {
+  email: String!
+  phone: String!
+  firstName: String!
+  lastName: String!
+  title: Int!
+}
+
+type Contact {
+  id:ID! @fake(type:number)
+  title:ContactTitle
+  dob: String @fake(type: pastDate, options: {dateFormat: "YYYY-MM-DD"})
+  language: String! @fake(type:locale)
+  email: String @fake(type: email)
+  phone: String @fake(type: phoneNumber)
+  firstName: String @fake(type: firstName)
+  lastName: String @fake(type: lastName)
+}
+
+type Address {
+  id:ID! @fake(type:number)
+  street: String! @fake(type: streetName)
+}
+
+type ContactTitle {
+  id:ID! @fake(type:number)
+}
